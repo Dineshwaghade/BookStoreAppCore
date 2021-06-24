@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+
+<div class="jumbotron bg-dark">
+    <div class="text-center text-info">
+        <h1 class="display-4 ">
+            Welcome to Book Store App
+        </h1>
+        <p class="text-muted glyphicon-text-color">
+            lsdfj alsd flas dflkajsd fsd fsd
+        </p>
+    </div>
+
+</div>
+<div class="container">
+    <h3>Top Books</h3>
+
+    <div class="row">
+
+        @foreach (var book in Model)
+        {
+            <div class="col-md-4">
+                <partial name="_BookCard" model="@book"/>
+            </div>
+        }
+    </div>
+</div>

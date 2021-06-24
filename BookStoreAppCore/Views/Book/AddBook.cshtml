@@ -1,0 +1,80 @@
+﻿@model BookStoreAppCore.Models.BookModel
+
+@{
+    ViewData["Title"] = "AddBook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <h4>BookModel</h4>
+    <hr />
+    @if (ViewBag.isSuccess == true)
+    {
+        <div class="alert alert-success" role="alert">
+            
+        </div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>New book have been added successfully</strong> 
+            to view details please <a asp-controller="book" asp-action="Getbookbyid" asp-route-Id="@ViewBag.BookId">click here</a> 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    <form asp-action="AddBook">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Title" class="control-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="control-label"></label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Author" class="control-label"></label>
+            <input asp-for="Author" class="form-control" />
+            <span asp-validation-for="Author" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Category" class="control-label"></label>
+            <input asp-for="Category" class="form-control" />
+            <span asp-validation-for="Category" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LanguageId" class="control-label"></label>
+            
+            <select asp-for="LanguageId" class="form-control" asp-items="ViewBag.Languages ">
+                <option value="">Select Language</option>
+            </select>
+            
+            <span asp-validation-for="LanguageId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="TotalPages" class="control-label"></label>
+            <input asp-for="TotalPages" class="form-control" />
+            <span asp-validation-for="TotalPages" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price" class="control-label"></label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CoverImage" class="control-label"></label>
+            <div class="custom-file">
+                <input asp-for="CoverImage" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            <span asp-validation-for="CoverImageURL" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+    
+

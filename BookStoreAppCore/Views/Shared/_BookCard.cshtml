@@ -1,0 +1,12 @@
+﻿@model BookStoreAppCore.Models.BookModel;
+<div class="card mb-4">
+    <img class="card-img-top" src="~/images/not_available.png" alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <div class="d-flex justify-content-between align-items-center">
+            <a asp-controller="book" asp-action="getbookbyid" asp-route-Id="@Model.Id" class="btn btn-outline-primary">View Details</a>
+            <span class="text-muted">Author</span>
+        </div>
+    </div>
+</div>

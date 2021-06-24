@@ -1,6 +1,10 @@
+using BookStoreAppCore.Models;
+using BookStoreAppCore.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -12,11 +16,20 @@ namespace BookStoreAppCore
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public Startup(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddMvc();
+            services.AddDbContext<BookStoreDbContext>(options=>
+            options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IBookRepository, BookRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -28,13 +41,15 @@ namespace BookStoreAppCore
             }
 
             app.UseRouting();
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapDefaultControllerRoute();
+                //endpoints.MapGet("/", async context =>
+                //{
+                //    await context.Response.WriteAsync("Hello World!");
+                //});
             });
         }
     }

@@ -1,0 +1,18 @@
+﻿@model IEnumerable<BookStoreAppCore.Models.BookModel>;
+@{
+    ViewData["Title"] = "GetAllBooks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>All Books</h2>
+    <div class="row">
+
+        @foreach (var book in Model)
+        {
+            <div class="col-md-4">
+                <partial name="_BookCard" model="@book" />
+            </div>
+        }
+    </div>
+</div>
