@@ -11,9 +11,6 @@
     <hr />
     @if (ViewBag.isSuccess == true)
     {
-        <div class="alert alert-success" role="alert">
-            
-        </div>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>New book have been added successfully</strong> 
             to view details please <a asp-controller="book" asp-action="Getbookbyid" asp-route-Id="@ViewBag.BookId">click here</a> 

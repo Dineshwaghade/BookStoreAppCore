@@ -57,5 +57,40 @@ namespace BookStoreAppCore.Controllers
             ViewBag.SimilarBooks = await _bookRepository.GetAllBooksAsync();
             return View(result);
         }
+        public async Task<IActionResult> BookList()
+        {
+            var result = await _bookRepository.GetAllBooksAsync();
+            return View(result);
+        }
+        public async Task<IActionResult> EditBook(int id)
+        {
+            ViewBag.Languages = new SelectList(await _bookRepository.GetAllLanguage(), "Id", "Name");
+            var result = await _bookRepository.GetBookByIdAsync(id);
+            if(result!=null)
+            {
+                return View(result);
+            }
+            return RedirectToAction("BookList");
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditBook(BookModel model)
+        {
+            ViewBag.Languages = new SelectList(await _bookRepository.GetAllLanguage(), "Id", "Name");
+
+            if (ModelState.IsValid)
+            {
+                var result = await _bookRepository.EditBookAsync(model);
+                if (result)
+                {
+                    return RedirectToAction("BookList");
+                }
+            }
+            return View();
+        }
+        public async Task<IActionResult> DeleteBook(int id)
+        {
+            var result=await _bookRepository.DeleteBookAsync(id);
+            return RedirectToAction("BookList");
+        }
     }
 }

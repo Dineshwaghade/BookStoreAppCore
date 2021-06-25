@@ -46,6 +46,8 @@ namespace BookStoreAppCore.Repository
                 Description = model.Description,
                 TotalPages = model.TotalPages,
                 Category = model.Category,
+                LanguageId=model.LanguageId,
+                Language=model.Language.Name,
                 Price = model.Price,
                 CoverImageURL = model.CoverImageURL,
                 CreatedOn = model.CreatedOn,
@@ -77,7 +79,21 @@ namespace BookStoreAppCore.Repository
         }
         public async Task<bool> EditBookAsync(BookModel model)
         {
-            var result = _context.Entry(model).State = EntityState.Modified;
+            Book book = new Book()
+            {
+                Id = model.Id,
+                Title = model.Title,
+                Author = model.Author,
+                Description = model.Description,
+                TotalPages = model.TotalPages,
+                Category = model.Category,
+                LanguageId = model.LanguageId,
+                Price = model.Price,
+                CoverImageURL = model.CoverImageURL,
+                CreatedOn = model.CreatedOn,
+                UpdatedOn = DateTime.UtcNow
+            };
+            var result = _context.Entry(book).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             if (result > 0)
             {
