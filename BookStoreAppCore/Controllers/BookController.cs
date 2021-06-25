@@ -33,6 +33,12 @@ namespace BookStoreAppCore.Controllers
             ViewBag.Languages = new SelectList(await _bookRepository.GetAllLanguage(), "Id", "Name");
             if (ModelState.IsValid)
             {
+                if(model.CoverImage!=null)
+                {
+                    string folder = "Book/CoverImage/";
+                    model.CoverImageURL = await _bookRepository.UploadFile(folder, model.CoverImage,model.CoverImageURL);
+
+                }
                 int result = await _bookRepository.AddNewBookAsync(model);
                 if (result > 0)
                 {
@@ -79,6 +85,12 @@ namespace BookStoreAppCore.Controllers
 
             if (ModelState.IsValid)
             {
+                if (model.CoverImage != null)
+                {
+                    string folder = "Book/CoverImage/";
+                    model.CoverImageURL = await _bookRepository.UploadFile(folder, model.CoverImage,model.CoverImageURL);
+                }
+
                 var result = await _bookRepository.EditBookAsync(model);
                 if (result)
                 {

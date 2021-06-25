@@ -42,12 +42,12 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1>@Html.DisplayFor(x => x.Author)</h1>
+                    <h4 class="text-primary">by @Html.DisplayFor(x => x.Author)</h4>
                 </div>
             </div>
-            <div class="row">
+            <div class="row text-muted">
                 <div class="col-md-12">
-                    <h1>@Html.DisplayFor(x => x.Description)</h1>
+                    <p>@Html.DisplayFor(x => x.Description)</p>
                 </div>
             </div>
             <div class="row">
@@ -55,6 +55,7 @@
                     <a class="btn btn-outline-primary" href="#" target="_blank">Read Now</a>
                 </div>
             </div>
+            <br />
             <div class="row">
                 <div class="col-md-12">
                     <ul class="list-group">

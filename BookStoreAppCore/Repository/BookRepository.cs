@@ -1,8 +1,11 @@
 ﻿using BookStoreAppCore.Data;
 using BookStoreAppCore.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,10 +14,12 @@ namespace BookStoreAppCore.Repository
     public class BookRepository : IBookRepository
     {
         private readonly BookStoreDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public BookRepository(BookStoreDbContext context)
+        public BookRepository(BookStoreDbContext context,IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
         public async Task<int> AddNewBookAsync(BookModel model)
         {
@@ -145,6 +150,24 @@ namespace BookStoreAppCore.Repository
             })
                 .ToListAsync();
             return languages;
+        }
+        public async Task<string> UploadFile(string folder,IFormFile file,string existFilePath)
+        {
+            folder += Guid.NewGuid().ToString() + "_" + file.FileName;
+            string FolderPath = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+            await file.CopyToAsync(new FileStream(FolderPath, FileMode.Create));
+
+            //to remove existing file
+            //if(!string.IsNullOrEmpty(existFilePath))
+            //{
+            //    existFilePath = existFilePath.Substring(1);
+            //    string FolderPath2 = Path.Combine(_webHostEnvironment.WebRootPath, existFilePath);
+            //    if (System.IO.File.Exists(FolderPath2))
+            //    {
+            //        System.IO.File.Delete(FolderPath2);
+            //    }
+            //}
+            return "/" + folder;
         }
     }
 }
