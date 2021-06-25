@@ -3,6 +3,7 @@ using BookStoreAppCore.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,7 +30,24 @@ namespace BookStoreAppCore
             services.AddMvc();
             services.AddDbContext<BookStoreDbContext>(options=>
             options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<BookStoreDbContext>().AddDefaultTokenProviders();
+            services.Configure<IdentityOptions>(Options =>
+            {
+                Options.Password.RequiredLength = 3;
+                Options.Password.RequiredUniqueChars = 1;
+                Options.Password.RequireDigit = false;
+                Options.Password.RequireLowercase = false;
+                Options.Password.RequireNonAlphanumeric = false;
+                Options.Password.RequireUppercase = false;
+            });
             services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+
+            // -- To disable client side validation make it false
+            //services.AddRazorPages().AddViewOptions(option=>
+            //{
+            //    option.HtmlHelperOptions.ClientValidationEnabled = false;
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
