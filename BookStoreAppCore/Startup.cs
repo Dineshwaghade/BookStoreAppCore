@@ -42,6 +42,7 @@ namespace BookStoreAppCore
             });
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
 
             // -- To disable client side validation make it false
             //services.AddRazorPages().AddViewOptions(option=>

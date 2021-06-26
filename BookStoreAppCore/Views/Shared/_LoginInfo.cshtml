@@ -5,7 +5,8 @@
     <ul class="navbar-nav nav-justified">
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Hello @User.Identity.Name
+                @*Hello @User.Identity.Name*@
+                @(User.FindFirst("UserFirstName").Value+" "+ User.FindFirst("UserLastName").Value)
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 @*<a class="dropdown-item" asp-controller="book" asp-action="booklist">Email</a>*@
