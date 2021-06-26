@@ -60,7 +60,7 @@ namespace BookStoreAppCore
 
             app.UseRouting();
             app.UseStaticFiles();
-
+            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();

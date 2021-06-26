@@ -1,0 +1,32 @@
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
+@using BookStoreAppCore.Models;
+@if (_signInManager.IsSignedIn(User))
+{
+    <ul class="navbar-nav nav-justified">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Hello @User.Identity.Name
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                @*<a class="dropdown-item" asp-controller="book" asp-action="booklist">Email</a>*@
+                <a class="dropdown-item" asp-controller="account" asp-action="ChangePassword">Change Password</a>
+                <a class="dropdown-item" asp-controller="account" asp-action="Logout">Log out</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </li>
+    </ul>
+
+}
+else
+{
+    <ul class="navbar-nav nav-justified">
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="account" asp-action="signupuser">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="account" asp-action="login">Login</a>
+        </li>
+    </ul>
+}
+

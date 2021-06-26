@@ -6,10 +6,10 @@
 }
 
 <div class="container">
-    <h4 class="offset-4 col-md-4">Sign Up</h4>
+    <h4>Sign Up</h4>
     <hr />
     <div class="row">
-        <div class="offset-4 col-md-4" >
+        <div class="col-md-6" >
             @if (ViewBag.isSuccess == true)
             {
                 <div class="alert alert-success" role="alert">
@@ -49,6 +49,9 @@
                     <input type="submit" value="Submit" class="btn btn-primary" />
                 </div>
             </form>
+        </div>
+        <div class="col-md-6">
+            <img src="~/images/SignUp.jpg" width="100%" height="100%"/>
         </div>
     </div>
 
