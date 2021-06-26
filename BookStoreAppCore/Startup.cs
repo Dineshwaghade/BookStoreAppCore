@@ -1,5 +1,6 @@
 using BookStoreAppCore.Models;
 using BookStoreAppCore.Repository;
+using BookStoreAppCore.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -43,6 +44,7 @@ namespace BookStoreAppCore
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
+            services.AddScoped<IUserServices, UserServices>();
 
             // -- To disable client side validation make it false
             //services.AddRazorPages().AddViewOptions(option=>
