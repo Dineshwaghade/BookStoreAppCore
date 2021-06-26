@@ -10,5 +10,7 @@ namespace BookStoreAppCore.Repository
         Task<SignInResult> PasswordAsync(LoginModel model);
         Task SignOutAsync();
         Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model);
+        Task SendEmail_EmailConfirmation(ApplicationUser user, string token);
+        Task<IdentityResult> ConfirmEmailAsync(string uid, string token);
     }
 }

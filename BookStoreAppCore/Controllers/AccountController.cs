@@ -97,6 +97,20 @@ namespace BookStoreAppCore.Controllers
             }
             return View(model);
         }
+        [HttpGet,Route("Email-Confirm")]
+        public async Task<IActionResult> EmailConfirm(string uid,string token)
+        {
+            token = token.Replace(' ', '+');
+            if(!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(token))
+            {
+                var result=await _accountRepository.ConfirmEmailAsync(uid, token);
+                if(result.Succeeded)
+                {
+                    ViewBag.isSuccess = true;
+                }
+            }
+            return View();
+        }
 
     }
 }

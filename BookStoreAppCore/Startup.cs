@@ -40,11 +40,14 @@ namespace BookStoreAppCore
                 Options.Password.RequireLowercase = false;
                 Options.Password.RequireNonAlphanumeric = false;
                 Options.Password.RequireUppercase = false;
+                Options.SignIn.RequireConfirmedEmail = true;
             });
+            services.Configure<SMTPConfigModel>(_configuration.GetSection("SMTPConfig"));
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
             services.AddScoped<IUserServices, UserServices>();
+            services.AddScoped<IEmailServices, EmailServices>();
 
             // -- To disable client side validation make it false
             //services.AddRazorPages().AddViewOptions(option=>
