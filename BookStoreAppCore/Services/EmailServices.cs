@@ -71,5 +71,11 @@ namespace BookStoreAppCore.Services
             var body = File.ReadAllText(string.Format(templatePath, templateName));
             return body;
         }
+        public async Task SendEmailForResetPassword(UserEmailOptions userEmailOptions)
+        {
+            userEmailOptions.Subject = UpdatePlaceholder("Hi {{Username}}, reset password ", userEmailOptions.Placeholder);
+            userEmailOptions.Body = UpdatePlaceholder(GetEmailBody("ResetPassword"), userEmailOptions.Placeholder);
+            await sendEmail(userEmailOptions);
+        }
     }
 }

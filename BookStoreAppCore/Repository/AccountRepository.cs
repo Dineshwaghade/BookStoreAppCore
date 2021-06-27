@@ -81,5 +81,37 @@ namespace BookStoreAppCore.Repository
            return await _userManager.ConfirmEmailAsync(await _userManager.FindByIdAsync(uid), token);
             
         }
+        public async Task<IdentityResult> ConfirmResetPasswordAsync(ResetPasswordModel model)
+        {
+            return await _userManager.ResetPasswordAsync(await _userManager.FindByIdAsync(model.uid), model.token, model.NewPassword);
+        }
+
+        public async Task SendEmail_ResetPassword(ApplicationUser user, string token)
+        {
+            string AppDomain = _configuration["Application:AppDomain"];
+            string link = _configuration["Application:ResetPassword"];
+            UserEmailOptions options = new UserEmailOptions()
+            {
+                toEmails = new List<string>() { user.Email },
+                Placeholder = new List<KeyValuePair<string, string>>()
+                {
+                    new KeyValuePair<string, string>("{{Username}}",user.FirstName),
+                    new KeyValuePair<string, string>("{{Link}}",string.Format(AppDomain+link,user.Id,token))
+                }
+            };
+            await _emailServices.SendEmailForResetPassword(options);
+        }
+        public async Task<bool> ForgotPasswordAsync(ForgotPasswordModel model)
+        {
+            ApplicationUser user = new ApplicationUser();
+            user=await _userManager.FindByEmailAsync(model.Email);
+            if(user!=null)
+            {
+                string token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                await SendEmail_ResetPassword(user, token);
+                return true;
+            }
+            return false;
+        }
     }
 }
