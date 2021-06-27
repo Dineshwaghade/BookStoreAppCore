@@ -1,5 +1,6 @@
 ﻿using BookStoreAppCore.Models;
 using BookStoreAppCore.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookStoreAppCore.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly IAccountRepository _accountRepository;
@@ -20,13 +22,13 @@ namespace BookStoreAppCore.Controllers
         {
             return View();
         }
+        [AllowAnonymous]
         public IActionResult SignUpUser()
         {
             return View();
         }
 
-
-        [HttpPost]
+        [HttpPost,AllowAnonymous]
         public async Task<IActionResult> SignUpUser(SignUpUserModel model)
         {
             if(ModelState.IsValid)
@@ -48,12 +50,12 @@ namespace BookStoreAppCore.Controllers
             }
             return View();
         }
-        [HttpGet,Route("login")]
+        [HttpGet,Route("login"),AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
-        [HttpPost,Route("login")]
+        [HttpPost,Route("login"),AllowAnonymous]
         public async Task<IActionResult> Login(LoginModel model)
         {
             if(ModelState.IsValid)
@@ -97,7 +99,7 @@ namespace BookStoreAppCore.Controllers
             }
             return View(model);
         }
-        [HttpGet,Route("Email-Confirm")]
+        [HttpGet,Route("Email-Confirm"),AllowAnonymous]
         public async Task<IActionResult> EmailConfirm(string uid,string token)
         {
             token = token.Replace(' ', '+');

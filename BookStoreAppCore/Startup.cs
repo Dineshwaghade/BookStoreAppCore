@@ -42,6 +42,7 @@ namespace BookStoreAppCore
                 Options.Password.RequireUppercase = false;
                 Options.SignIn.RequireConfirmedEmail = true;
             });
+            services.ConfigureApplicationCookie(config => config.LoginPath = "/login");
             services.Configure<SMTPConfigModel>(_configuration.GetSection("SMTPConfig"));
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
@@ -67,6 +68,7 @@ namespace BookStoreAppCore
             app.UseRouting();
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
